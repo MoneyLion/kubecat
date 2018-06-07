@@ -1,0 +1,21 @@
+reporters:
+  - name: http ping
+    module: "http"
+    interval: 4 # time in seconds
+    options:
+      method: GET
+      url: http://localhost:3000/v1/users
+      timeout: 30000
+      acceptableStatus:
+        - 200
+        - 201
+      headers:
+        apiKey: "apiKeyHere"
+
+  - name: tile38
+    module: "Tile38"
+    interval: 5 # time in seconds
+    options:
+      url: http://localhost:9851
+      timeout: 30 # in seconds
+      min: 20
