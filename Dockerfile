@@ -1,6 +1,4 @@
 FROM golang:onbuild as build_image
-RUN mkdir /app
-RUN mkdir /go/src/app
 ADD . /go/src/app
 WORKDIR /go/src/app
 RUN go get -u github.com/golang/dep/...
@@ -11,5 +9,5 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 RUN mkdir /app
 WORKDIR /app
-COPY --from=build_image /app/main .
+COPY --from=build_image /go/src/app/main .
 CMD ["./main"]

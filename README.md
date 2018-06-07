@@ -42,7 +42,57 @@ Run:
 `SENTRY_DSN=<keyhere> ./kubecat`
 
 In docker:
-`docker run -e SENTRY_DSN=<keyhere> -v ./config.yaml:/app/config.yaml stevelacy/kubecat`
+`docker run -e SENTRY_DSN=<keyhere> -v ${PWD}/config.yaml:/app/config.yaml stevelacy/kubecat`
+
+Kubernetes:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubecat-config
+data:
+  kubecat-config.yaml: |
+    reporters:
+      - name: tile38
+        module: "Tile38"
+        interval: 60 # time in seconds
+        options:
+          url: http://tile38-read:9851
+          timeout: 30 # in seconds
+          min: 20
+
+---
+
+kind: ConfigMap
+metadata:
+  creationTimestamp: 2018-06-07T13:40:27Z
+  name: kubecat-config
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kubecat
+spec:
+  template:
+    metadata:
+      labels:
+        app: kubecat
+    spec:
+      containers:
+        - image: "stevelacy/kubecat:latest"
+          name: kubecat-container
+          volumeMounts:
+            - name: kubecat-config
+              mountPath: /app/config.yaml
+              subPath: config.yaml
+      volumes:
+      - name: kubecat-config
+        configMap:
+          name: kubecat-config
+          items:
+            - key: kubecat-config.yaml
+              path: config.yaml
+```
 
 
 ### [MIT](./LICENSE)
