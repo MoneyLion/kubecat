@@ -62,6 +62,7 @@ func HTTP(reporter Reporter) (Status, error) {
 		req, _ = http.NewRequest("POST", reporter.Options.URL, bytes.NewBuffer([]byte(reporter.Options.Body)))
 		req.Header.Add("Content-Type", "application/json")
 	}
+	req.Header.Add("Cache-Control", "no-cache")
 
 	for key, value := range reporter.Options.Headers {
 		req.Header.Add(key, value)
