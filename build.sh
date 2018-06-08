@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t stevelacy/kubecat .
+docker build -t stevelacy/kubecat:latest .

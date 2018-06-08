@@ -64,10 +64,6 @@ data:
 
 ---
 
-kind: ConfigMap
-metadata:
-  creationTimestamp: 2018-06-07T13:40:27Z
-  name: kubecat-config
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
