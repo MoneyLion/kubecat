@@ -104,7 +104,13 @@ func Tile38(reporter Reporter) (Status, error) {
 		timeout = time.Duration(reporter.Options.Timeout) * time.Second
 	}
 	client := http.Client{Timeout: timeout}
-	response, err := client.Post(url, "application/json", bytes.NewBuffer([]byte(reporter.Options.Body)))
+
+	req, _ := http.NewRequest("POST", url, bytes.NewBuffer([]byte(reporter.Options.Body)))
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Cache-Control", "no-cache")
+
+	response, err := client.Do(req)
+
 	if err != nil {
 		errorStatus := Status{
 			Message: "error",
@@ -131,6 +137,7 @@ func Tile38(reporter Reporter) (Status, error) {
 	}
 	var tile38Body Tile38Response
 	err = json.Unmarshal([]byte(buf), &tile38Body)
+	fmt.Printf("%s %s", err, tile38Body)
 	if tile38Body.Stats.NumObjects >= reporter.Options.Min {
 		status.Message = "success"
 		return status, nil
