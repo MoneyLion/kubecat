@@ -120,7 +120,6 @@ func Tile38(reporter Reporter) (Status, error) {
 			errorStatus.Code = string(response.StatusCode)
 		}
 
-		fmt.Printf("%s", err)
 		return errorStatus, err
 	}
 	defer response.Body.Close()
@@ -135,12 +134,10 @@ func Tile38(reporter Reporter) (Status, error) {
 			Message: "error",
 			Error:   fmt.Sprintf("%s", err),
 		}
-		fmt.Printf("%s", err)
 		return errorStatus, err
 	}
 	var tile38Body Tile38Response
 	err = json.Unmarshal([]byte(buf), &tile38Body)
-	fmt.Printf("%s %s", err, tile38Body)
 	if tile38Body.Stats.NumObjects >= reporter.Options.Min {
 		status.Message = "success"
 		return status, nil
