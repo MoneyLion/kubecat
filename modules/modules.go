@@ -119,6 +119,8 @@ func Tile38(reporter Reporter) (Status, error) {
 		if response != nil {
 			errorStatus.Code = string(response.StatusCode)
 		}
+
+		fmt.Printf("%s", err)
 		return errorStatus, err
 	}
 	defer response.Body.Close()
@@ -133,6 +135,7 @@ func Tile38(reporter Reporter) (Status, error) {
 			Message: "error",
 			Error:   fmt.Sprintf("%s", err),
 		}
+		fmt.Printf("%s", err)
 		return errorStatus, err
 	}
 	var tile38Body Tile38Response

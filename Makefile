@@ -1,6 +1,6 @@
 GOBUILD=go build .
 DOCKER_USER=stevelacy
-DOCKER_TAG=a88314c
+DOCKER_TAG=43e2f4c
 NAME=kubecat
 
 all: docker
