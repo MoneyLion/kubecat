@@ -37,14 +37,14 @@ type Status struct {
 	Code    string
 }
 
-// Tile38ResponseStats is the stats returned from the Tile38Response
-type Tile38ResponseStats struct {
+// tile38ResponseStats is the stats returned from the tile38Response
+type tile38ResponseStats struct {
 	NumObjects int `json:"num_objects"`
 }
 
-// Tile38Response is the network response from Tile38
-type Tile38Response struct {
-	Stats Tile38ResponseStats `json:"stats"`
+// tile38Response is the network response from Tile38
+type tile38Response struct {
+	Stats tile38ResponseStats `json:"stats"`
 }
 
 // HTTP module allows for generic http GET/POST requests to endpoints
@@ -136,7 +136,7 @@ func Tile38(reporter Reporter) (Status, error) {
 		}
 		return errorStatus, err
 	}
-	var tile38Body Tile38Response
+	var tile38Body tile38Response
 	err = json.Unmarshal([]byte(buf), &tile38Body)
 	if tile38Body.Stats.NumObjects >= reporter.Options.Min {
 		status.Message = "success"
