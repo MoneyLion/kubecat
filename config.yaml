@@ -17,5 +17,13 @@ reporters:
     interval: 5 # time in seconds
     options:
       url: http://localhost:9851
-      timeout: 30 # in seconds
+      timeout: 30 # time in seconds
       min: 20
+  - name: tile38 shrink
+    module: "http"
+    interval: 50 # time in seconds
+    options:
+      method: POST
+      url: http://localhost:9851/aofshrink
+      acceptableStatus:
+        - 200

@@ -36,6 +36,7 @@ func main() {
 
 	for _, reporter := range config.Reporters {
 		fmt.Printf("Loading reporter: %s with module: %s\n", reporter.Name, reporter.Module)
+		runModule(reporter)
 		startChannel(reporter, client)
 	}
 
@@ -64,7 +65,7 @@ func runModule(reporter modules.Reporter) modules.Status {
 		status, _ := modules.Tile38(reporter)
 		return status
 	}
-	fmt.Printf("No module found for reporter %s", reporter.Name)
+	fmt.Printf("No module found for reporter '%s' -- %s\n", reporter.Name, reporter.Module)
 	return modules.Status{}
 }
 
