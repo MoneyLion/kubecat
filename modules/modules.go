@@ -153,7 +153,11 @@ func Tile38(reporter Reporter) (Status, error) {
 func Redis(reporter Reporter) (Status, error) {
 	opts, err := redis.ParseURL(reporter.URL)
 	if err != nil {
-		panic(fmt.Sprintf("invalid URL %s", reporter.URL))
+		errorStatus := Status{
+			Message: "error",
+			Error:   fmt.Sprintf("invalid URL %s", reporter.URL),
+		}
+		return errorStatus, nil
 	}
 	if reporter.Timeout != 0 {
 		timeout := time.Duration(reporter.Timeout) * time.Second
