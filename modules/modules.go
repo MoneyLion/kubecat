@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/go-redis/redis"
 	"io"
 	"net/http"
 	"time"
@@ -145,5 +146,39 @@ func Tile38(reporter Reporter) (Status, error) {
 
 	status.Message = "error"
 	status.Error = fmt.Sprintf("Objects below minimum threshold: %d got: %d", reporter.Options.Min, tile38Body.Stats.NumObjects)
+	return status, nil
+}
+
+// Redis module allows for checking if a redis instance is online
+func Redis(reporter Reporter) (Status, error) {
+	opts := &redis.Options{
+		Addr: reporter.URL,
+		DB:   0,
+	}
+	if reporter.Timeout != 0 {
+		timeout := time.Duration(reporter.Timeout) * time.Second
+		opts.DialTimeout = timeout
+		opts.ReadTimeout = timeout
+		opts.WriteTimeout = timeout
+	}
+	client := redis.NewClient(opts)
+	pong, err := client.Ping().Result()
+	if err != nil {
+		errorStatus := Status{
+			Message: "error",
+			Error:   fmt.Sprintf("%s %e", reporter.URL, err),
+		}
+		return errorStatus, err
+	}
+	if pong != "PONG" {
+		errorStatus := Status{
+			Message: "error",
+			Error:   "Unable to ping redis -- did not get a response",
+		}
+		return errorStatus, nil
+	}
+	status := Status{
+		Message: "success",
+	}
 	return status, nil
 }

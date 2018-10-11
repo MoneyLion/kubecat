@@ -65,6 +65,10 @@ func runModule(reporter modules.Reporter) modules.Status {
 		status, _ := modules.Tile38(reporter)
 		return status
 	}
+	if reporter.Module == "Redis" {
+		status, _ := modules.Redis(reporter)
+		return status
+	}
 	fmt.Printf("No module found for reporter '%s' -- %s\n", reporter.Name, reporter.Module)
 	return modules.Status{}
 }

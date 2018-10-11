@@ -27,3 +27,9 @@ reporters:
       url: http://localhost:9851/aofshrink
       acceptableStatus:
         - 200
+  - name: redis
+    module: "Redis"
+    interval: 5 # time in seconds
+    options:
+      url: "localhost:6379"
+      timeout: 30 # time in seconds
