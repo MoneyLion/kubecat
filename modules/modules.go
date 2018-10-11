@@ -167,6 +167,7 @@ func Redis(reporter Reporter) (Status, error) {
 	}
 	client := redis.NewClient(opts)
 	pong, err := client.Ping().Result()
+	client.Close()
 	if err != nil {
 		errorStatus := Status{
 			Message: "error",
