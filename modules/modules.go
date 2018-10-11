@@ -155,7 +155,7 @@ func Redis(reporter Reporter) (Status, error) {
 	if err != nil {
 		errorStatus := Status{
 			Message: "error",
-			Error:   fmt.Sprintf("invalid URL %s", reporter.URL),
+			Error:   fmt.Sprintf("invalid URL %s %e", reporter.URL, err),
 		}
 		return errorStatus, nil
 	}
