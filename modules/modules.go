@@ -151,9 +151,9 @@ func Tile38(reporter Reporter) (Status, error) {
 
 // Redis module allows for checking if a redis instance is online
 func Redis(reporter Reporter) (Status, error) {
-	opts := &redis.Options{
-		Addr: reporter.URL,
-		DB:   0,
+	opts, err := redis.ParseURL(reporter.URL)
+	if err != nil {
+		panic(fmt.Sprintf("invalid URL %s", reporter.URL))
 	}
 	if reporter.Timeout != 0 {
 		timeout := time.Duration(reporter.Timeout) * time.Second

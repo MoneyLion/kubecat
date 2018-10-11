@@ -7,6 +7,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -36,6 +37,10 @@ func main() {
 
 	for _, reporter := range config.Reporters {
 		fmt.Printf("Loading reporter: %s with module: %s\n", reporter.Name, reporter.Module)
+		if strings.Contains(reporter.Options.URL, "env:") {
+			env := strings.Replace(reporter.Options.URL, "env:", "", 1)
+			reporter.Options.URL = os.Getenv(env)
+		}
 		runModule(reporter)
 		startChannel(reporter, client)
 	}

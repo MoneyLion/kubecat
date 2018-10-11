@@ -31,5 +31,5 @@ reporters:
     module: "Redis"
     interval: 5 # time in seconds
     options:
-      url: "localhost:6379"
+      url: "env:REDIS_URL"
       timeout: 30 # time in seconds
