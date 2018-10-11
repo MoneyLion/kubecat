@@ -39,7 +39,7 @@ func main() {
 		fmt.Printf("Loading reporter: %s with module: %s\n", reporter.Name, reporter.Module)
 		if strings.Contains(reporter.Options.URL, "env:") {
 			env := strings.Replace(reporter.Options.URL, "env:", "", 1)
-			reporter.Options.URL = os.Getenv(env)
+			reporter.Options.URL = strings.Replace(os.Getenv(env), "\n", "", -1)
 		}
 		runModule(reporter)
 		startChannel(reporter, client)
