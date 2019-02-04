@@ -29,6 +29,7 @@ func main() {
 	if err != nil {
 		panic("unable to connect to sentry")
 	}
+	client.SetEnvironment(os.Getenv("ENV"))
 
 	err = yaml.Unmarshal([]byte(parsed), &config)
 	if err != nil {
