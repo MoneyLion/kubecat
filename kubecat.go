@@ -87,7 +87,7 @@ func notifySentry(client *raven.Client, reporter modules.Reporter, status module
 		"message": message,
 		"url":     reporter.Options.URL,
 	}
-	raven.CaptureMessage(title, messages)
+	client.CaptureMessage(title, messages)
 }
 
 func forever() {
