@@ -1,8 +1,7 @@
-FROM golang:onbuild as build_image
+FROM golang:1.13 as build_image
 ADD . /go/src/app
 WORKDIR /go/src/app
-RUN go get -u github.com/golang/dep/...
-RUN dep ensure
+RUN go mod tidy
 RUN GOOS=linux GOARCH=386 CGO_ENABLED=0 go build -o main .
 
 FROM alpine:latest
