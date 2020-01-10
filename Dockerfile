@@ -1,7 +1,7 @@
 FROM golang:1.13 as build_image
 ADD . /go/src/app
 WORKDIR /go/src/app
-RUN go mod tidy
+RUN go mod download
 RUN GOOS=linux GOARCH=386 CGO_ENABLED=0 go build -o main .
 
 FROM alpine:latest
