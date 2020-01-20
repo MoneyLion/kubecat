@@ -20,12 +20,16 @@ data:
         interval: 60 # time in seconds
         options:
           url: https://example-external.ml.oi/health
+          acceptableStatus:
+          - 200
           timeout: 10 # in seconds
       - name: example-internal
         module: "http"
         interval: 60 # time in seconds
         options:
           url: http://example-internal.staging/actuator/health
+          acceptableStatus:
+          - 200
           timeout: 10 # in seconds
 
 ---
