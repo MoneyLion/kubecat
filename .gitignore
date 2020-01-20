@@ -1,2 +1,12 @@
 kubecat
 vendor
+
+# Ignore JetBrains
+.idea
+
+# Ignore direnv
+.envrc*
+
+# Ignore sensitive infra folder
+infra
+
